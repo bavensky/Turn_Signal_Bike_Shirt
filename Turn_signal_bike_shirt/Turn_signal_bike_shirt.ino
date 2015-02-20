@@ -7,7 +7,7 @@
    * Library  : https://github.com/adafruit/LPD8806                              *
    * Author   : Bavensky :3                                                      *
    * E-Mail   : Aphirak_Sang-ngenchai@hotmail.com                                *
-   * Date     : 03/09/2014 [dd/mm/yyyy]                                          *
+   * Date     : 20/02/2015 [dd/mm/yyyy]                                          *
    *******************************************************************************/
    
   #include "LPD8806.h"
@@ -17,8 +17,12 @@
   int nLEDs = 32;
   
   // หน่วงเวลา
-  int wait = 10;
-  int i=0;
+  int wait  =  50;
+  int _loop;
+  int one  =  0;
+  int two  =  0;
+  int three  =  0;
+  int four  =  0;
   
   //  ขาข้อมูล(Data) ต่อขา Digital 2
   //  ขาสัญญาณนาฬิกา(Clock) ต่อขา Digital 3
@@ -35,64 +39,56 @@
   
   void loop() 
   {
-    for(i=0; i<=32; i++)  {
-      strip.setPixelColor(i, strip.Color(  127,  0,  0));
-      i += 1;
-      delay(wait);
-      strip.show();
-    }
-//    for(int i=0; i<=5; i++)
-//    {
-//      for(int i=0; i<=6; i++)
-//      {
-//        strip.setPixelColor(i, strip.Color(  127,  0,  0));
-//        delay(wait);
-//        strip.show(); 
-//      }
-//      
-//      for(int i=7; i<=13; i++)
-//      {
-//        strip.setPixelColor(i, strip.Color(  127,  127,  127));
-//        delay(wait);
-//        strip.show(); 
-//      }
-//      
-//      for(int i=14; i<=29; i++)
-//      {
-//        strip.setPixelColor(i, strip.Color(  0,  127,  0));
-//        delay(wait);
-//        strip.show(); 
-//      }
-//      
-//      for(int i=30; i<=36; i++)
-//      {
-//        strip.setPixelColor(i, strip.Color(  127,  127,  127));
-//        delay(wait);
-//        strip.show(); 
-//      }
-//      
-//      for(int i=37; i<=44; i++)
-//      {
-//        strip.setPixelColor(i, strip.Color(  127,  0,  0));
-//        delay(wait);
-//        strip.show(); 
-//      }
-//      
-//      // ดับทุกหลอด
-//      for(int i=44; i>0; i--)
-//      {
-//        strip.setPixelColor(i, 0);
-//        delay(wait);
-//        strip.show(); 
-//      }
-//    }
-//    flag();
-//    delay(3000);
-  }
+    one    =  0;
+    two    =  15;
+    three  =  16;
+    four   =  31;
     
-  void flag()
+    for(_loop=0; _loop<=8; _loop++)  {
+      strip.setPixelColor(one, strip.Color(  127,  0,  0));
+      strip.setPixelColor(two, strip.Color(  127,  0,  0));
+      strip.setPixelColor(three, strip.Color(  127,  0,  0));
+      strip.setPixelColor(one, strip.Color(  127,  0,  0));
+      delay(wait);
+      
+      one += 1;
+      two -= 1;
+      three += 1;
+      four -= 1;
+    }
+    strip.show();
+    
+    
+//    for(one=7; one>=0; one--)  {
+//      strip.setPixelColor(one, strip.Color(  127,  0,  0));
+////      strip.show();
+//      delay(wait);
+//    } 
+//    for(two=8; two<=15; two++)  {
+//      strip.setPixelColor(two, strip.Color(  127,  0,  0));
+//      strip.show();
+//      delay(wait);
+//    } 
+    
+//    if(one  <=  0)  {
+//      dark_right();
+//      one=0;
+//    }
+//
+//    if(one  <=  0 && two  >=  15)  {
+//      dark_right();
+//      one=0;
+//      two=0;
+//      delay(2000);
+//    }
+    
+    
+    
+  }    //  End loop
+    
+  void turn_right()
   {
-    // RED 
+//    ---->
     strip.setPixelColor(0, strip.Color(  127,  0,  0));
     strip.setPixelColor(1, strip.Color(  127,  0,  0));
     strip.setPixelColor(2, strip.Color(  127,  0,  0));
@@ -100,53 +96,53 @@
     strip.setPixelColor(4, strip.Color(  127,  0,  0));
     strip.setPixelColor(5, strip.Color(  127,  0,  0));
     strip.setPixelColor(6, strip.Color(  127,  0,  0));
+    strip.setPixelColor(7, strip.Color(  127,  0,  0));
+
+//    <----    
+    strip.setPixelColor(8, strip.Color(  127,  0,  0));
+    strip.setPixelColor(9, strip.Color(  127,  0,  0));
+    strip.setPixelColor(10, strip.Color(  127,  0,  0));
+    strip.setPixelColor(11, strip.Color(  127,  0,  0));
+    strip.setPixelColor(12, strip.Color(  127,  0,  0));
+    strip.setPixelColor(13, strip.Color(  127,  0,  0));
+    strip.setPixelColor(14, strip.Color(  127,  0,  0));
+    strip.setPixelColor(15, strip.Color(  127,  0,  0));
     
-    strip.setPixelColor(37, strip.Color(  127,  0,  0));
-    strip.setPixelColor(38, strip.Color(  127,  0,  0));
-    strip.setPixelColor(39, strip.Color(  127,  0,  0));
-    strip.setPixelColor(40, strip.Color(  127,  0,  0));
-    strip.setPixelColor(41, strip.Color(  127,  0,  0));
-    strip.setPixelColor(42, strip.Color(  127,  0,  0));
-    strip.setPixelColor(43, strip.Color(  127,  0,  0));
-  
+//    ---->    
+    strip.setPixelColor(16, strip.Color(  127,  0,  0));
+    strip.setPixelColor(17, strip.Color(  127,  0,  0));
+    strip.setPixelColor(18, strip.Color(  127,  0,  0));
+    strip.setPixelColor(19, strip.Color(  127,  0,  0));
+    strip.setPixelColor(20, strip.Color(  127,  0,  0));
+    strip.setPixelColor(21, strip.Color(  127,  0,  0));
+    strip.setPixelColor(22, strip.Color(  127,  0,  0));
+    strip.setPixelColor(23, strip.Color(  127,  0,  0));
+
+//    <----     
+    strip.setPixelColor(24, strip.Color(  127,  0,  0));
+    strip.setPixelColor(25, strip.Color(  127,  0,  0));
+    strip.setPixelColor(26, strip.Color(  127,  0,  0));
+    strip.setPixelColor(27, strip.Color(  127,  0,  0));
+    strip.setPixelColor(28, strip.Color(  127,  0,  0));
+    strip.setPixelColor(29, strip.Color(  127,  0,  0));
+    strip.setPixelColor(30, strip.Color(  127,  0,  0));
+    strip.setPixelColor(31, strip.Color(  127,  0,  0));
     
-    // White 
-    strip.setPixelColor(7, strip.Color(  127,  127,  127));
-    strip.setPixelColor(8, strip.Color(  127,  127,  127));
-    strip.setPixelColor(9, strip.Color(  127,  127,  127));
-    strip.setPixelColor(10, strip.Color(  127,  127,  127));
-    strip.setPixelColor(11, strip.Color(  127,  127,  127));
-    strip.setPixelColor(12, strip.Color(  127,  127,  127));
-    strip.setPixelColor(13, strip.Color(  127,  127,  127));
-    
-    strip.setPixelColor(30, strip.Color(  127,  127,  127));
-    strip.setPixelColor(31, strip.Color(  127,  127,  127));
-    strip.setPixelColor(32, strip.Color(  127,  127,  127));
-    strip.setPixelColor(33, strip.Color(  127,  127,  127));
-    strip.setPixelColor(34, strip.Color(  127,  127,  127));
-    strip.setPixelColor(35, strip.Color(  127,  127,  127));
-    strip.setPixelColor(36, strip.Color(  127,  127,  127));
-     
-    
-    // Blue
-    strip.setPixelColor(14, strip.Color(  0,  127,  0));
-    strip.setPixelColor(15, strip.Color(  0,  127,  0));
-    strip.setPixelColor(16, strip.Color(  0,  127,  0));
-    strip.setPixelColor(17, strip.Color(  0,  127,  0));
-    strip.setPixelColor(18, strip.Color(  0,  127,  0));
-    strip.setPixelColor(19, strip.Color(  0,  127,  0));
-    strip.setPixelColor(20, strip.Color(  0,  127,  0));
-    strip.setPixelColor(21, strip.Color(  0,  127,  0));
-    
-    strip.setPixelColor(22, strip.Color(  0,  127,  0));
-    strip.setPixelColor(23, strip.Color(  0,  127,  0));
-    strip.setPixelColor(24, strip.Color(  0,  127,  0));
-    strip.setPixelColor(25, strip.Color(  0,  127,  0));
-    strip.setPixelColor(26, strip.Color(  0,  127,  0));
-    strip.setPixelColor(27, strip.Color(  0,  127,  0));
-    strip.setPixelColor(28, strip.Color(  0,  127,  0));
-    strip.setPixelColor(29, strip.Color(  0,  127,  0));
+    delay(wait);
     strip.show(); 
+  }
+  
+  void dark_right()  {
+  //ดับทุกหลอด
+  for(int l=7; l>=0; l--)  {
+    strip.setPixelColor(l, 0);
+    delay(wait);
+  }
+  for(int o=15; o>=8; o--)  {
+    strip.setPixelColor(o, 0);
+    delay(wait);
+  }
+  strip.show(); 
   }
 
  
