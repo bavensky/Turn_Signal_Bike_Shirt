@@ -1,13 +1,13 @@
-   /*******************************************************************************
-   * Project  : Turn signal bike shirt                                           *
+   /******************************************************************************
+   * Project  : Turn signal bike shirt  Received                                 *
    * Compiler : Arduino 1.5.5                                                    *
-   * Board    : Arduino Duemilanove                                              *
+   * Board    : Arduino Nano                                                     *
    * Shield   : -                                                                *
    * Module   : LPD8806 RGB LED Strip                                            *
    * Library  : https://github.com/adafruit/LPD8806                              *
    * Author   : Bavensky :3                                                      *
    * E-Mail   : Aphirak_Sang-ngenchai@hotmail.com                                *
-   * Date     : 20/02/2015 [dd/mm/yyyy]                                          *
+   * Date     : 21/02/2015 [dd/mm/yyyy]                                          *
    *******************************************************************************/
   #include <RCSwitch.h>
   #include "LPD8806.h"
@@ -47,36 +47,41 @@
   }
   
   void loop()  {
-    rainbowCycle(1);
-    if (mySwitch.available()) {
+    while(mySwitch.available()) {
       int received = 0;
       received = mySwitch.getReceivedValue();
       Serial.print("Received : ");
       Serial.println(received);
+      //rainbowCycle(1);
+     if(received == 1)  {
+       rainbowCycle(1);
+     }
+     if(received == 2)  {
+       turn_right();
+     }
+     if(received == 3)  {
+       turn_left();
+     }
       mySwitch.resetAvailable();
     }
-    
-//     
-//    if(received == 1)  {
-//      rainbowCycle(1);
-//    }
-//    if(received == 2)  {
-//      turn_right();
-//    }
-//    if(received == 3)  {
-//      turn_left();
-//    }
-    
-//    rainbowCycle(1);
-//    delay(1000);
-//    turn_right();
-//    delay(1000);
-//    turn_left();
-//    delay(1000);
-    
-    
+
   }    //  End loop
-    
+    void colorChase(uint32_t c, uint8_t wait) {
+  int i;
+  
+  // Start by turning all pixels off:
+  for(i=0; i<strip.numPixels(); i++) strip.setPixelColor(i, 0);
+
+  // Then display one pixel at a time:
+  for(i=0; i<strip.numPixels(); i++) {
+    strip.setPixelColor(i, c); // Set new pixel 'on'
+    strip.show();              // Refresh LED states
+    strip.setPixelColor(i, 0); // Erase pixel, but don't refresh!
+    delay(wait);
+  }
+
+  strip.show(); // Refresh to turn off last pixel
+}
   void turn_right()
   {
     one    =  0;
@@ -175,7 +180,7 @@
  void rainbowCycle(uint8_t wait) {
   uint16_t i, j;
   
-  for (j=0; j < 384 * 5; j++) {     // 5 cycles of all 384 colors in the wheel
+  for (j=0; j < 384; j++) {     // 5 cycles of all 384 colors in the wheel
     for (i=0; i < strip.numPixels(); i++) {
       // tricky math! we use each pixel as a fraction of the full 384-color wheel
       // (thats the i / strip.numPixels() part)
