@@ -19,14 +19,10 @@
   int nLEDs = 32;
   
   // หน่วงเวลา
-  int wait  =  50;
-  
+  int wait  =  30;
+  int received = 0;
   int _loop;
-  int row1;
-  int row2;
-  int row3;
-  int row4;
-  
+
   int one  =  0;
   int two  =  0;
   int three  =  0;
@@ -47,41 +43,26 @@
   }
   
   void loop()  {
+    dark_light();
     while(mySwitch.available()) {
-      int received = 0;
-      received = mySwitch.getReceivedValue();
-      Serial.print("Received : ");
-      Serial.println(received);
-      //rainbowCycle(1);
-     if(received == 1)  {
-       rainbowCycle(1);
-     }
-     if(received == 2)  {
-       turn_right();
-     }
-     if(received == 3)  {
-       turn_left();
-     }
+      
+      received = mySwitch.getReceivedValue(); 
+      if(received == 1)  {
+        bike_break();
+      }
+      else if(received == 2)  {
+        turn_left();
+      }
+      else if(received == 3)  {
+        turn_right();
+      }
+      else if(received != 1 && received != 2 && received != 3)  {
+        dark_light();
+      }
       mySwitch.resetAvailable();
     }
-
   }    //  End loop
-    void colorChase(uint32_t c, uint8_t wait) {
-  int i;
-  
-  // Start by turning all pixels off:
-  for(i=0; i<strip.numPixels(); i++) strip.setPixelColor(i, 0);
-
-  // Then display one pixel at a time:
-  for(i=0; i<strip.numPixels(); i++) {
-    strip.setPixelColor(i, c); // Set new pixel 'on'
-    strip.show();              // Refresh LED states
-    strip.setPixelColor(i, 0); // Erase pixel, but don't refresh!
-    delay(wait);
-  }
-
-  strip.show(); // Refresh to turn off last pixel
-}
+ 
   void turn_right()
   {
     one    =  0;
@@ -93,33 +74,33 @@
       strip.setPixelColor(two, strip.Color(  127,  0,  0));
       strip.setPixelColor(three, strip.Color(  127,  0,  0));
       strip.setPixelColor(four, strip.Color(  127,  0,  0));
-      delay(wait);
-      
+
       one += 1;
       two -= 1;
       three += 1;
       four -= 1;
       
       strip.show();
+      delay(wait);
     }
+    
     one    =  0;
     two    =  15;
     three  =  16;
     four   =  31;  
-    
     for(_loop=0; _loop<=8; _loop++)  {
       strip.setPixelColor(one, strip.Color(  0,  0,  0));
       strip.setPixelColor(two, strip.Color(  0,  0,  0));
       strip.setPixelColor(three, strip.Color(  0,  0,  0));
       strip.setPixelColor(four, strip.Color(  0,  0,  0));
-      delay(wait);
-      
+
       one += 1;
       two -= 1;
       three += 1;
       four -= 1;
       
       strip.show();
+      delay(wait);
     }
   }
   
@@ -133,7 +114,6 @@
       strip.setPixelColor(two, strip.Color(  127,  0,  0));
       strip.setPixelColor(three, strip.Color(  127,  0,  0));
       strip.setPixelColor(four, strip.Color(  127,  0,  0));
-      delay(wait);
       
       one -= 1;
       two += 1;
@@ -141,6 +121,7 @@
       four += 1;
       
       strip.show();
+      delay(wait);
     }
     
     one    =  7;
@@ -152,7 +133,6 @@
       strip.setPixelColor(two, strip.Color(  0,  0,  0));
       strip.setPixelColor(three, strip.Color(  0,  0,  0));
       strip.setPixelColor(four, strip.Color(  0,  0,  0));
-      delay(wait);
       
       one -= 1;
       two += 1;
@@ -160,21 +140,26 @@
       four += 1;
       
       strip.show();
+      delay(wait);
     }
     
   }
   
   void bike_break()  {
-    
+    for(int l=0; l<=32; l++)  {
+      strip.setPixelColor(l, strip.Color(  127,  0,  0));
+    }
+    strip.show(); 
+    delay(wait);
   }
   
-  void dark_right()  {
+  void dark_light()  {
     //ดับทุกหลอด
     for(int l=0; l<=32; l++)  {
       strip.setPixelColor(l, 0);
-      delay(wait);
     }
     strip.show(); 
+    delay(wait);
   }
 
  void rainbowCycle(uint8_t wait) {

@@ -11,31 +11,43 @@
    *******************************************************************************/
 #include <RCSwitch.h>
 
+#define  BREAK          3
+#define  BUTTON_LEFT    4
+#define  BUTTON_RIGHT   5
+#define  DEBOUNCE       200
+
 RCSwitch mySwitch = RCSwitch();
 
-void setup() {
+int transmitter  =  0;
 
-  Serial.begin(9600);
-  
+void setup()  {
+  Serial.begin(9600);  
+  pinMode(BREAK, INPUT_PULLUP);
+  pinMode(BUTTON_LEFT, INPUT_PULLUP);
+  pinMode(BUTTON_RIGHT, INPUT_PULLUP);
   // Transmitter is connected to Arduino Pin #10  
   mySwitch.enableTransmit(10);
-
-  // Optional set pulse length.
-  // mySwitch.setPulseLength(320);
-  
-  // Optional set protocol (default is 1, will work for most outlets)
-  // mySwitch.setProtocol(2);
-  
-  // Optional set number of transmission repetitions.
-  // mySwitch.setRepeatTransmit(15);
-  
 }
 
-void loop() {
-  mySwitch.send(1,24);
-  delay(10000);
-  mySwitch.send(2,24);
-  delay(10000);
-  mySwitch.send(3,24);
-  delay(10000);
+void loop()  {
+
+  if(digitalRead(BREAK) == 0)  {
+    delay(DEBOUNCE);
+    transmitter = 1;
+  }
+  else if(digitalRead(BUTTON_LEFT) == 0)  {
+    delay(DEBOUNCE);
+    transmitter = 2;
+  } 
+  else if(digitalRead(BUTTON_RIGHT) == 0)  {
+    delay(DEBOUNCE);
+    transmitter = 3;
+  }
+  else {
+    transmitter = 0;
+  }
+    
+  mySwitch.send(transmitter,  24);
+  Serial.println(transmitter);
+
 }
