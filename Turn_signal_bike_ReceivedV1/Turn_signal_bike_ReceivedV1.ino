@@ -71,8 +71,8 @@
     four   =  31;    
     for(_loop=0; _loop<=8; _loop++)  {
       strip.setPixelColor(one, strip.Color(  127,  0,  0));
-      strip.setPixelColor(two, strip.Color(  127,  0,  0));
-      strip.setPixelColor(three, strip.Color(  127,  0,  0));
+      strip.setPixelColor(two, strip.Color(  0,  127,  0));
+      strip.setPixelColor(three, strip.Color(  0,  127,  0));
       strip.setPixelColor(four, strip.Color(  127,  0,  0));
 
       one += 1;
@@ -111,8 +111,8 @@
     four   =  24;    
     for(_loop=0; _loop<=8; _loop++)  {
       strip.setPixelColor(one, strip.Color(  127,  0,  0));
-      strip.setPixelColor(two, strip.Color(  127,  0,  0));
-      strip.setPixelColor(three, strip.Color(  127,  0,  0));
+      strip.setPixelColor(two, strip.Color(  0,  127,  0));
+      strip.setPixelColor(three, strip.Color(  0,  127,  0));
       strip.setPixelColor(four, strip.Color(  127,  0,  0));
       
       one -= 1;
@@ -146,10 +146,23 @@
   }
   
   void bike_break()  {
-    for(int l=0; l<=32; l++)  {
-      strip.setPixelColor(l, strip.Color(  127,  0,  0));
+    one    =  7;
+    two    =  8;
+    three  =  23;
+    four   =  24;    
+    for(_loop=0; _loop<=8; _loop++)  {
+      strip.setPixelColor(one, strip.Color(  127,  0,  0));
+      strip.setPixelColor(two, strip.Color(  0,  127,  0));
+      strip.setPixelColor(three, strip.Color(  0,  127,  0));
+      strip.setPixelColor(four, strip.Color(  127,  0,  0));
+      
+      one -= 1;
+      two += 1;
+      three -= 1;
+      four += 1;
     }
-    strip.show(); 
+    
+    strip.show();
     delay(wait);
   }
   
