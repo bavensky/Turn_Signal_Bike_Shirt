@@ -28,7 +28,7 @@
   int three  =  0;
   int four  =  0;
   
-  //  ขาข้อมูล(Data) ต่อขา Digital 2
+  //  ขาข้อมูล(Data) ต่อขา Digital 4
   //  ขาสัญญาณนาฬิกา(Clock) ต่อขา Digital 3
   int dataPin  = 4;
   int clockPin = 3;
