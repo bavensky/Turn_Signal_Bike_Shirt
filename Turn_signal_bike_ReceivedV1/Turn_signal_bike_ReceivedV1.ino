@@ -38,7 +38,9 @@
   void setup() 
   {
     Serial.begin(9600);
+    
     strip.begin();
+    
     mySwitch.enableReceive(0);  //  connect inerrupt0 = pin 2
   }
   
@@ -59,6 +61,7 @@
       else if(received != 1 && received != 2 && received != 3)  {
         dark_light();
       }
+      
       mySwitch.resetAvailable();
     }
   }    //  End loop
@@ -70,10 +73,10 @@
     three  =  16;
     four   =  31;    
     for(_loop=0; _loop<=8; _loop++)  {
-      strip.setPixelColor(one, strip.Color(  127,  0,  0));
-      strip.setPixelColor(two, strip.Color(  0,  127,  0));
-      strip.setPixelColor(three, strip.Color(  0,  127,  0));
-      strip.setPixelColor(four, strip.Color(  127,  0,  0));
+      strip.setPixelColor(one, strip.Color(  200,  0,  200));
+      strip.setPixelColor(two, strip.Color(  200,  0,  200));
+      strip.setPixelColor(three, strip.Color(  200,  0,  200));
+      strip.setPixelColor(four, strip.Color(  200,  0,  200));
 
       one += 1;
       two -= 1;
@@ -110,10 +113,10 @@
     three  =  23;
     four   =  24;    
     for(_loop=0; _loop<=8; _loop++)  {
-      strip.setPixelColor(one, strip.Color(  127,  0,  0));
-      strip.setPixelColor(two, strip.Color(  0,  127,  0));
-      strip.setPixelColor(three, strip.Color(  0,  127,  0));
-      strip.setPixelColor(four, strip.Color(  127,  0,  0));
+      strip.setPixelColor(one, strip.Color(  200,  0,  200));
+      strip.setPixelColor(two, strip.Color(  200,  0,  200));
+      strip.setPixelColor(three, strip.Color(  200,  0,  200));
+      strip.setPixelColor(four, strip.Color(  200,  0,  200));
       
       one -= 1;
       two += 1;
@@ -151,10 +154,10 @@
     three  =  23;
     four   =  24;    
     for(_loop=0; _loop<=8; _loop++)  {
-      strip.setPixelColor(one, strip.Color(  127,  0,  0));
-      strip.setPixelColor(two, strip.Color(  0,  127,  0));
-      strip.setPixelColor(three, strip.Color(  0,  127,  0));
-      strip.setPixelColor(four, strip.Color(  127,  0,  0));
+      strip.setPixelColor(one, strip.Color(  255,  0,  0));
+      strip.setPixelColor(two, strip.Color(  255,  0,  0));
+      strip.setPixelColor(three, strip.Color(  255,  0,  0));
+      strip.setPixelColor(four, strip.Color(  255,  0,  0));
       
       one -= 1;
       two += 1;
