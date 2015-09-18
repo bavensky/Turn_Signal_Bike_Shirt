@@ -92,10 +92,10 @@ void loop()  {
   uint8_t buf[32];
   uint8_t len = sizeof(buf);
   nrf24.waitAvailable();
+
   if (nrf24.recv(buf, &len))  {
-    Serial.println(buf[1]);
     if(buf[1] == 1) {
-        turn_right();
+      turn_right();
     }
     if(buf[1] == 2) {
       turn_left();
@@ -119,7 +119,7 @@ void turn_right() {
       strip.setPixelColor(*turn++, strip.Color(  255,  0,  200));
       strip.show();
     }
-    delay(500);
+    delay(300);
     m++;
     if (m == 5)  m = 1;
   }
@@ -135,7 +135,7 @@ void turn_left() {
       strip.setPixelColor(*turn++, strip.Color(  255,  0,  200));
       strip.show();
     }
-    delay(500);
+    delay(300);
     m++;
     if (m == 5)  m = 1;
   }

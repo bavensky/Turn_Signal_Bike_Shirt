@@ -14,17 +14,17 @@
 
 NRF24 nrf24(9, 10);
  
-#define  BREAK          A0
-#define  BUTTON_LEFT    A1
-#define  BUTTON_RIGHT   A2
-#define  DEBOUNCE       200
+#define  BREAK          3
+#define  BUTTON_LEFT    4
+#define  BUTTON_RIGHT   5
+#define  DEBOUNCE       100
 
 void setup()  {
   Serial.begin(9600);  
   
-  pinMode(BREAK, INPUT_PULLUP);
-  pinMode(BUTTON_LEFT, INPUT_PULLUP);
-  pinMode(BUTTON_RIGHT, INPUT_PULLUP);
+  pinMode(BREAK, INPUT);
+  pinMode(BUTTON_LEFT, INPUT);
+  pinMode(BUTTON_RIGHT, INPUT);
 
   if (!nrf24.init())
     Serial.println("NRF24 init failed");
@@ -41,24 +41,24 @@ void setup()  {
 }
 
 void loop()  {
-   uint8_t buf[32];
-
+  uint8_t buf[32];
   if(digitalRead(BREAK) == 0)  {
     delay(DEBOUNCE);
     buf[1] = 3;
     Serial.println("Break");
   }
-  else if(digitalRead(BUTTON_LEFT) == 0)  {
+  if(digitalRead(BUTTON_LEFT) == 0)  {
     delay(DEBOUNCE);
     buf[1] = 2;
     Serial.println("Left");
   } 
-  else if(digitalRead(BUTTON_RIGHT) == 0)  {
+  if(digitalRead(BUTTON_RIGHT) == 0)  {
     delay(DEBOUNCE);
     buf[1] = 1;
     Serial.println("Right");
   }
-  else {
+  if(digitalRead(BREAK) == 1 && digitalRead(BUTTON_LEFT) == 1 && digitalRead(BUTTON_RIGHT) == 1)
+  {
     Serial.println("None");
     buf[1] = 0;
   }
