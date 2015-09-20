@@ -37,8 +37,7 @@ int row3  = 0;
 int row4  = 0;
 int row5  = 0;
 
-int stoplight[] = {0, 1, 13, 14, 15, 16, 17, 18, 19, 29, 30, 31, 32, 32,
-                   6, 7, 8, 9, 10, 20, 21, 22, 23, 24, 25, 26, 38, 39};
+int stoplight[] = {3, 4, 10, 11, 12, 13, 17, 18, 19, 20, 21, 22, 26, 27, 28, 29, 35, 36};
 
 // เลี้ยวขวา
 int realkwastep1[9] = {2, 12, 16, 17, 18, 19, 20, 28, 34};
@@ -56,6 +55,9 @@ int* realsai[5];
 int* turn;
 
 int m;
+
+void rainbowCycle(uint8_t wait);
+uint32_t Wheel(uint16_t WheelPos);
 
 void setup()
 {
@@ -86,6 +88,7 @@ void setup()
   if (!nrf24.powerUpRx())
       Serial.println("powerOnRx failed");    
   Serial.println("initialised");
+  dark_light();
 }
 
 void loop()  {
@@ -102,6 +105,9 @@ void loop()  {
     }
     if(buf[1] == 3) {
       bike_break();
+    }
+    if(buf[1] == 4) {
+      rainbowCycle(0);
     }
     else if(buf[1] == 0)  {
       dark_light();
@@ -142,7 +148,7 @@ void turn_left() {
 }
 
 void bike_break()  {
-  for(int i=0; i<28; i++) {
+  for(int i=0; i<18; i++) { 
      strip.setPixelColor(stoplight[i], strip.Color(  255,  0,  0));
   }
   strip.show();
@@ -158,3 +164,37 @@ void dark_light()  {
   delay(wait);
 }
 
+void rainbowCycle(uint8_t wait) {
+  uint16_t i, j;
+
+  for (j=0; j < 128 * 5; j++) {     
+    for (i=0; i < strip.numPixels(); i++) {
+      strip.setPixelColor(i, Wheel(((i * 384 / strip.numPixels()) + j) % 384));
+    }
+    strip.show();   // write all the pixels out
+    delay(wait);
+  }
+}
+uint32_t Wheel(uint16_t WheelPos)
+{
+  byte r, g, b;
+  switch(WheelPos / 128)
+  {
+    case 0:
+      r = 127 - WheelPos % 128; // red down
+      g = WheelPos % 128;       // green up
+      b = 0;                    // blue off
+      break;
+    case 1:
+      g = 127 - WheelPos % 128; // green down
+      b = WheelPos % 128;       // blue up
+      r = 0;                    // red off
+      break;
+    case 2:
+      b = 127 - WheelPos % 128; // blue down
+      r = WheelPos % 128;       // red up
+      g = 0;                    // green off
+      break;
+  }
+  return(strip.Color(r,g,b));
+}
