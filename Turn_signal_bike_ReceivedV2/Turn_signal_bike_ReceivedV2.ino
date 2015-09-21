@@ -98,20 +98,20 @@ void loop()  {
 
   if (nrf24.recv(buf, &len))  {
     if(buf[1] == 1) {
-      turn_right();
-    }
-    if(buf[1] == 2) {
       turn_left();
     }
+    if(buf[1] == 2) {
+      turn_right();
+    }
     if(buf[1] == 3) {
-      bike_break();
+      theaterChase(strip.Color(127, 0, 0), 30);
     }
     if(buf[1] == 4) {
-      rainbowCycle(0);
+      rainbow(1);
     }
     else if(buf[1] == 0)  {
       dark_light();
-    }
+    } 
   }
 }    //  End loop
 
@@ -128,6 +128,17 @@ void turn_right() {
     delay(300);
     m++;
     if (m == 5)  m = 1;
+    
+    uint8_t buf[32];
+    uint8_t len = sizeof(buf);
+    nrf24.waitAvailable();
+    if (nrf24.recv(buf, &len))  {
+      if(buf[1] == 0) {
+        m = 1;
+        i = 5;
+      } 
+    }  
+    
   }
 }
 
@@ -144,6 +155,17 @@ void turn_left() {
     delay(300);
     m++;
     if (m == 5)  m = 1;
+
+    uint8_t buf[32];
+    uint8_t len = sizeof(buf);
+    nrf24.waitAvailable();
+    if (nrf24.recv(buf, &len))  {
+      if(buf[1] == 0) {
+        m = 1;
+        i = 5;
+      } 
+    }
+    
   }
 }
 
@@ -164,17 +186,35 @@ void dark_light()  {
   delay(wait);
 }
 
-void rainbowCycle(uint8_t wait) {
-  uint16_t i, j;
-
-  for (j=0; j < 128 * 5; j++) {     
+void rainbow(uint8_t wait) {
+  int i, j;
+   
+  for (j=0; j < 384; j++) {     // 3 cycles of all 384 colors in the wheel
     for (i=0; i < strip.numPixels(); i++) {
-      strip.setPixelColor(i, Wheel(((i * 384 / strip.numPixels()) + j) % 384));
-    }
+      strip.setPixelColor(i, Wheel( (i + j) % 384));
+    }  
     strip.show();   // write all the pixels out
     delay(wait);
   }
 }
+
+void theaterChase(uint32_t c, uint8_t wait) {
+  for (int j=0; j<10; j++) {  //do 10 cycles of chasing
+    for (int q=0; q < 3; q++) {
+      for (int i=0; i < strip.numPixels(); i=i+3) {
+        strip.setPixelColor(i+q, c);    //turn every third pixel on
+      }
+      strip.show();
+     
+      delay(wait);
+     
+      for (int i=0; i < strip.numPixels(); i=i+3) {
+        strip.setPixelColor(i+q, 0);        //turn every third pixel off
+      }
+    }
+  }
+}
+
 uint32_t Wheel(uint16_t WheelPos)
 {
   byte r, g, b;

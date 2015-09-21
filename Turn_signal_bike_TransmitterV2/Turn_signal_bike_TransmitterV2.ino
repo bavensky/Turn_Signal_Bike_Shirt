@@ -14,9 +14,10 @@
 
 NRF24 nrf24(9, 10);
  
-#define  BREAK          3
-#define  BUTTON_LEFT    4
-#define  BUTTON_RIGHT   5
+#define  BUTTON_LEFT    A0
+#define  BUTTON_RIGHT   A1
+#define  BREAK          A2
+#define  BLINK          A3
 #define  DEBOUNCE       100
 
 void setup()  {
@@ -57,7 +58,12 @@ void loop()  {
     buf[1] = 1;
     Serial.println("Right");
   }
-  if(digitalRead(BREAK) == 1 && digitalRead(BUTTON_LEFT) == 1 && digitalRead(BUTTON_RIGHT) == 1)
+  if(digitalRead(BLINK) == 0)  {
+    delay(DEBOUNCE);
+    buf[1] = 4;
+    Serial.println("SHOW");
+  }
+  if(digitalRead(BREAK) == 1 && digitalRead(BUTTON_LEFT) == 1 && digitalRead(BUTTON_RIGHT) == 1 && digitalRead(BLINK) == 1)
   {
     Serial.println("None");
     buf[1] = 0;
