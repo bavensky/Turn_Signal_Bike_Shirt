@@ -109,7 +109,7 @@ void loop()  {
     if(buf[1] == 4) {
       rainbow(1);
     }
-    else if(buf[1] == 0)  {
+    else if(!buf[1])  {
       dark_light();
     } 
   }
